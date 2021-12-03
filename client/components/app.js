@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Gradeform from './gradeforms';
 import Gradetable from './gradetable';
 import Header from './header';
 
@@ -59,7 +60,10 @@ export default class App extends Component {
     return (
       <div className='wrapper'>
         <Header avgGrade={this.state.avgGrade} />
-        <Gradetable grades={this.state.grades} />
+        <div className='gradetableContainer'>
+          <Gradetable grades={this.state.grades} />
+          <Gradeform grades={this.state.grades} onSubmit={this.addNewGrade} />
+        </div>
       </div>
     );
   }
