@@ -5,6 +5,7 @@ import Header from './header';
 export default class App extends Component {
   state = {
     grades: [],
+    avgGrade: 0,
   };
 
   componentDidMount() {
@@ -15,14 +16,34 @@ export default class App extends Component {
     fetch('/api/grades')
       .then((response) => response.json())
       .then((jsonData) => {
-        this.setState({ grades: jsonData });
+        this.setState(
+          {
+            grades: jsonData,
+          },
+          () => {
+            this.getAverageGrades(jsonData);
+          }
+        );
       });
+  };
+
+  getAverageGrades = (grades) => {
+    const gradesArr = [];
+    grades.forEach((x) => {
+      gradesArr.push(x.grade);
+    });
+    const avg = gradesArr.reduce((acc, cur) => {
+      return acc + cur;
+    });
+    this.setState({
+      avgGrade: Math.round(avg / gradesArr.length),
+    });
   };
 
   render() {
     return (
       <div className='wrapper'>
-        <Header />
+        <Header avgGrade={this.state.avgGrade} />
         <Gradetable grades={this.state.grades} />
       </div>
     );

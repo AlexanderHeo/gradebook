@@ -41,5 +41,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(process.env.PORT, () => {
+  /* eslint-disable no-console */
   console.log(`Listening on port ${process.env.PORT}, yo`);
 });
