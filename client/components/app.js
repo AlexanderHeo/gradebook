@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Gradetable from './gradetable';
+import Header from './header';
 
 export default class App extends Component {
   state = {
@@ -13,13 +15,16 @@ export default class App extends Component {
     fetch('/api/grades')
       .then((response) => response.json())
       .then((jsonData) => {
-        this.setState({
-          grades: jsonData,
-        });
+        this.setState({ grades: jsonData });
       });
   };
 
   render() {
-    return <h1>TESTING TESTING</h1>;
+    return (
+      <div className='wrapper'>
+        <Header />
+        <Gradetable grades={this.state.grades} />
+      </div>
+    );
   }
 }
