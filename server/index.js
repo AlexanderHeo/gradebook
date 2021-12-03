@@ -16,6 +16,15 @@ app.get('/api/health-check', (req, res, next) => {
     .catch((err) => next(err));
 });
 
+app.get('/api/grades', (req, res, next) => {
+  const sql = `
+    select * from "grades"
+    `;
+  db.query(sql)
+    .then((result) => res.status(200).json(result.rows))
+    .catch((error) => next(error));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
