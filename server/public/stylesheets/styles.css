@@ -43,10 +43,14 @@ html {
 .gradetableContainer {
   display: flex;
   justify-content: center;
+  min-width: 340px;
+}
+.gradetableContainer table,
+.gradetable {
+  align-self: flex-start;
 }
 .gradetable {
   width: 100%;
-  align-self: flex-start;
 }
 table {
   width: 100%;
