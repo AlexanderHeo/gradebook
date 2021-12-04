@@ -117,7 +117,7 @@ app.patch('/api/grades/:gradeId', (req, res, next) => {
   const sql = `
     update "grades"
     set "course" = $1, "grade" = $2
-    where "gradeId = $3
+    where "gradeId" = $3
     returning *;
   `;
   const params = [course, grade, gradeId];
