@@ -1,3 +1,6 @@
+.container {
+  margin-top: -3rem;
+}
 .wrapper {
   margin: 3rem;
 }
@@ -84,7 +87,7 @@ input {
   height: 42px;
   border-radius: 6px;
   margin-left: 15px;
-  color: white;
+  color: hsl(0, 100%, 100%);
 }
 .gradeFormButton.add {
   background: hsl(211, 100%, 50%);
@@ -95,9 +98,48 @@ input {
 .gradeFormButton.delete {
   background: hsl(0, 100%, 50%);
 }
+.gradeFormButton.update {
+  background: hsl(120, 100%, 30%);
+}
 .validator {
   display: flex;
   justify-content: center;
   font-size: 1.2rem;
   color: hsl(0, 100%, 50%);
+}
+.updateModalContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: hsla(0, 0%, 65%, 0.95);
+}
+.updateModal {
+  height: fit-content;
+  margin-top: 2rem;
+  padding: 2rem 4rem;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  background: hsl(0, 100%, 100%);
+}
+.updateHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modalHeader {
+  font-size: 1.5rem;
+}
+.updateStudentName {
+  font-size: 2rem;
+}
+.updateForm {
+  margin: 2rem 0;
+}
+.formSection {
+  display: flex;
+}
+.formSection:first-of-type {
+  margin: 1rem 0;
 }
