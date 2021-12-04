@@ -8,6 +8,7 @@ class Gradeform extends Component {
     name: '',
     course: '',
     grade: '',
+    invalidMessage: '',
   };
 
   handleChange = (e) => {
@@ -21,27 +22,39 @@ class Gradeform extends Component {
     this.setState({
       [name]: value,
       id: nextId,
+      invalidMessage: '',
     });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const parseIntGrade = parseInt(this.state.grade);
-    const newStudent = {
-      id: this.state.id,
-      name: this.state.name,
-      course: this.state.course,
-      grade: parseIntGrade,
-    };
-    this.setState(
-      {
-        id: '',
-        name: '',
-        course: '',
-        grade: '',
-      },
-      () => this.props.onSubmit(newStudent)
-    );
+    const parsedIntGrade = parseInt(this.state.grade);
+
+    if (!this.state.name) {
+      this.setState({ invalidMessage: 'Please enter a name' });
+    } else if (!this.state.course) {
+      this.setState({ invalidMessage: 'Please enter a course' });
+    } else if (!this.state.grade) {
+      this.setState({ invalidMessage: 'Please enter a grade' });
+    } else if (this.state.grade && parsedIntGrade > 100) {
+      this.setState({ invalidMessage: 'Grade cannot be greater than 100' });
+    } else {
+      const newStudent = {
+        id: this.state.id,
+        name: this.state.name,
+        course: this.state.course,
+        grade: parsedIntGrade,
+      };
+      this.setState(
+        {
+          id: '',
+          name: '',
+          course: '',
+          grade: '',
+        },
+        () => this.props.onSubmit(newStudent)
+      );
+    }
   };
 
   handleReset = () => {
@@ -53,6 +66,7 @@ class Gradeform extends Component {
   };
 
   render() {
+    const invalidMessage = this.state.invalidMessage;
     return (
       <div className='enter-form'>
         <form onSubmit={this.handleSubmit} onReset={this.handleReset}>
@@ -92,18 +106,26 @@ class Gradeform extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className='buttonContainer'>
-            <button type='submit' value='Add' className='gradeFormButton add'>
-              Add
-            </button>
-            <button
-              type='reset'
-              value='Cancel'
-              className='gradeFormButton cancel'
-            >
-              Cancel
-            </button>
-          </div>
+          {!invalidMessage ? (
+            <div className='buttonContainer'>
+              <button type='submit' value='Add' className='gradeFormButton add'>
+                Add
+              </button>
+              <button
+                type='reset'
+                value='Cancel'
+                className='gradeFormButton cancel'
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <div className='validator'>
+              <div className='validatorMessage'>
+                {this.state.invalidMessage}
+              </div>
+            </div>
+          )}
         </form>
       </div>
     );

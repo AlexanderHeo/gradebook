@@ -104,6 +104,7 @@
       "padded-blocks": 0,
       "arrow-parens": 0,
       "comma-dangle": 0,
+      "multiline-ternary": 0,
       "curly": [
         "error",
         "multi-line"
