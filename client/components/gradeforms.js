@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 
 class Gradeform extends Component {
   state = {
-    id: '',
     name: '',
     course: '',
     grade: '',
@@ -16,12 +15,8 @@ class Gradeform extends Component {
     const name = target.name;
     const value = target.value;
 
-    const currentGrades = this.props.grades;
-    const currentId = currentGrades[currentGrades.length - 1].id;
-    const nextId = Math.round(Math.random() * 10) + parseInt(currentId);
     this.setState({
       [name]: value,
-      id: nextId,
       invalidMessage: '',
     });
   };
@@ -40,14 +35,12 @@ class Gradeform extends Component {
       this.setState({ invalidMessage: 'Grade cannot be greater than 100' });
     } else {
       const newStudent = {
-        id: this.state.id,
         name: this.state.name,
         course: this.state.course,
         grade: parsedIntGrade,
       };
       this.setState(
         {
-          id: '',
           name: '',
           course: '',
           grade: '',
