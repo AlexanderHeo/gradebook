@@ -62,10 +62,26 @@ npm install
 copy .env.example .env
 ```
 
-edit .env with PostgreSQL credentials 4. Create a PostgreSQL database
+- edit .env with PostgreSQL credentials 4. Create a PostgreSQL database
 
 ```
 createdb gradebook
 ```
 
 4. Import database schema and data
+
+```
+psql [DATABASE_URL] < database/dump.sql
+```
+
+5. Start project
+
+```
+npm run dev
+```
+
+6. Open in your browser
+
+```
+localhost:5000
+```
