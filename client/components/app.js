@@ -56,12 +56,40 @@ export default class App extends Component {
       });
   };
 
+  deleteGrade = (deleteId) => {
+    fetch(`/api/grades/${deleteId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => null)
+      .then((jsonData) => {
+        const gradesCopy = [...this.state.grades];
+        const index = gradesCopy.findIndex((studentObj) => {
+          return studentObj.gradeId === deleteId;
+        });
+        gradesCopy.splice(index, 1);
+        this.setState({ grades: gradesCopy });
+      });
+  };
+
+  handleClick = (e, studentInfo) => {
+    const name = e.target.name;
+    if (name === 'delete') {
+      this.deleteGrade(studentInfo);
+    }
+  };
+
   render() {
     return (
       <div className='wrapper'>
         <Header avgGrade={this.state.avgGrade} />
         <div className='gradetableContainer'>
-          <Gradetable grades={this.state.grades} />
+          <Gradetable
+            buttonClick={this.handleClick}
+            grades={this.state.grades}
+          />
           <Gradeform grades={this.state.grades} onSubmit={this.addNewGrade} />
         </div>
       </div>

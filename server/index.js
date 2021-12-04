@@ -71,6 +71,36 @@ app.post('/api/grades', (req, res, next) => {
     });
 });
 
+app.delete('/api/grades/:gradeId', (req, res, next) => {
+  const { gradeId } = req.params;
+  if (!parseInt(gradeId)) {
+    return res.status(400).json({
+      error: 'The grade id must be a positive integer',
+    });
+  }
+  const sql = `
+    delete from "grades"
+    where "gradeId" = $1
+    returning *;
+  `;
+  const params = [gradeId];
+  db.query(sql, params)
+    .then((result) => {
+      const deletedGrade = result.rows[0];
+      if (!deletedGrade) {
+        res.status(404).json({
+          error: `Cannot find student at id ${gradeId}`,
+        });
+      } else {
+        res.status(204).json(deletedGrade);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      next(error);
+    });
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
