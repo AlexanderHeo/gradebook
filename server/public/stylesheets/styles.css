@@ -92,6 +92,9 @@ input {
 .gradeFormButton.cancel {
   background: hsl(210, 7.7%, 35.7%);
 }
+.gradeFormButton.delete {
+  background: hsl(0, 100%, 50%);
+}
 .validator {
   display: flex;
   justify-content: center;
