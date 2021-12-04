@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Gradeform from './gradeforms';
 import Gradetable from './gradetable';
 import Header from './header';
 
@@ -40,11 +41,29 @@ export default class App extends Component {
     });
   };
 
+  addNewGrade = (newStudent) => {
+    fetch('/api/grades', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newStudent),
+    })
+      .then((response) => response.json())
+      .then((jsonData) => {
+        const gradesCopy = [...this.state.grades];
+        const addedNewStudent = gradesCopy.concat(jsonData);
+        this.getAverageGrades(addedNewStudent);
+        this.setState({ grades: addedNewStudent });
+      });
+  };
+
   render() {
     return (
       <div className='wrapper'>
         <Header avgGrade={this.state.avgGrade} />
-        <Gradetable grades={this.state.grades} />
+        <div className='gradetableContainer'>
+          <Gradetable grades={this.state.grades} />
+          <Gradeform grades={this.state.grades} onSubmit={this.addNewGrade} />
+        </div>
       </div>
     );
   }
