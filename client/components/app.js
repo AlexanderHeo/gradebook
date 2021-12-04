@@ -16,6 +16,15 @@ export default class App extends Component {
     this.getAllGrades();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      !prevState.grades ||
+      prevState.grades.length !== this.state.grades.length
+    ) {
+      this.getAverageGrades(this.state.grades);
+    }
+  }
+
   getAllGrades = () => {
     fetch('/api/grades')
       .then((response) => response.json())
@@ -33,15 +42,19 @@ export default class App extends Component {
 
   getAverageGrades = (grades) => {
     const gradesArr = [];
-    grades.forEach((x) => {
-      gradesArr.push(x.grade);
-    });
-    const avg = gradesArr.reduce((acc, cur) => {
-      return acc + cur;
-    });
-    this.setState({
-      avgGrade: Math.round(avg / gradesArr.length),
-    });
+    if (grades.length === 0) {
+      this.setState({ avgGrade: 0 });
+    } else {
+      grades.forEach((x) => {
+        gradesArr.push(x.grade);
+      });
+      const avg = gradesArr.reduce((acc, cur) => {
+        return acc + cur;
+      });
+      this.setState({
+        avgGrade: Math.round(avg / gradesArr.length),
+      });
+    }
   };
 
   addNewGrade = (newStudent) => {
