@@ -46,6 +46,7 @@ html {
 }
 .gradetable {
   width: 100%;
+  align-self: flex-start;
 }
 table {
   width: 100%;
