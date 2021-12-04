@@ -101,6 +101,43 @@ app.delete('/api/grades/:gradeId', (req, res, next) => {
     });
 });
 
+app.patch('/api/grades/:gradeId', (req, res, next) => {
+  const { gradeId } = req.params;
+  const course = req.body.course;
+  const grade = req.body.grade;
+  if (!parseInt(gradeId)) {
+    return res.status(400).json({
+      error: 'The grade id must be a positive integer',
+    });
+  } else if (!grade || isNaN(grade)) {
+    return res.status(400).json({
+      error: 'Grade must be a positive integer',
+    });
+  }
+  const sql = `
+    update "grades"
+    set "course" = $1, "grade" = $2
+    where "gradeId = $3
+    returning *;
+  `;
+  const params = [course, grade, gradeId];
+  db.query(sql, params)
+    .then((result) => {
+      const updatedGrade = result.rows[0];
+      if (!updatedGrade) {
+        res.status(400).json({
+          error: `Cannot find student with id ${gradeId}`,
+        });
+      } else {
+        res.status(200).json(updatedGrade);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      next(error);
+    });
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });

@@ -20,6 +20,15 @@ const Grade = ({ student, buttonClick }) => {
         >
           Delete
         </button>
+        <button
+          type='submit'
+          name='update'
+          onClick={(e) => buttonClick(e, student)}
+          value='Update'
+          className='gradeFormButton update'
+        >
+          Update
+        </button>
       </td>
     </tr>
   );
