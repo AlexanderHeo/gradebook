@@ -27,7 +27,7 @@ The Student Grade Table is a dynamic web application for teachers to record the 
 
 ## Preview
 
-![SGT](sgt-react.gif)
+![SGT](/images/sgt-react.gif)
 
 # Development
 
@@ -43,9 +43,6 @@ The Student Grade Table is a dynamic web application for teachers to record the 
 
 ```
 git clone https://github.com/AlexanderHeo/student_grade_table.git
-```
-
-```
 cd student_grade_table
 ```
 
@@ -55,7 +52,13 @@ cd student_grade_table
 npm install
 ```
 
-3. Setup environment variables
+3. Create a PostgreSQL database
+
+```
+createdb gradebook
+```
+
+4. Setup environment variables
 
 copy the .env.example file and rename to .env
 
@@ -63,27 +66,25 @@ copy the .env.example file and rename to .env
 copy .env.example .env
 ```
 
-edit .env with PostgreSQL credentials
-
-4. Create a PostgreSQL database
+5. edit .env with PostgreSQL credentials
 
 ```
-createdb gradebook
+nano .env
 ```
 
-5. Import database schema and data
+6. Import database schema and data
 
 ```
 psql [DATABASE_URL] < database/dump.sql
 ```
 
-6. Start project
+7. Start project
 
 ```
 npm run dev
 ```
 
-7. Open in your browser
+8. Open in your browser
 
 ```
 localhost:5000
