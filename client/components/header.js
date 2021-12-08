@@ -4,7 +4,7 @@ const header = ({ avgGrade }) => {
   return (
     <div id='header'>
       <div className='heading'>
-        <h1>Gradebook</h1>
+        <h1>Student Grade Table</h1>
       </div>
       <div className='averageGrade'>
         <div className='averageGradeLabel'>
